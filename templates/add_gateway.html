@@ -1,0 +1,92 @@
+{% extends 'index.html' %}
+
+{% block title %}Add Gateway{% endblock %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./styles/add_gateway.css') }}">
+    <script>
+        function detectLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+        function showPosition(position) {
+            document.getElementById('location').value = position.coords.latitude + ", " + position.coords.longitude;
+        }
+    </script>
+
+    <style>
+       
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+    
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+    
+        th {
+            background-color: #f2f2f2;
+        }
+    
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+    
+
+</head>
+
+    <div class="container">
+        <h1>Add Gateway</h1>
+        <form action="{{ url_for('add_gateway') }}" method="POST">
+            <label for="gateway_name">Gateway Name:</label>
+            <input type="text" id="gateway_name" name="gateway_name" required>
+            
+            <label for="gateway_mac"> MAC address:</label>
+            <input type="text" id="gateway_mac" name="gateway_mac" required>
+
+            <div class="location-container">
+                <label for="location">Location:</label>
+                <div class="location-input">
+                    <input type="text" id="location" name="location" required>
+                    <button type="button" onclick="detectLocation()">Detect Location</button>
+                </div>
+            </div>
+            <input type="submit" value="Add Gateway">
+        </form>
+    </div>
+<div>
+    <h1>List of Gateways</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>MAC Address</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for gateway in gateways %}
+                <tr>
+                    <td>{{ gateway[0] }}</td>
+                    <td>{{ gateway[1]}}</td>
+                    <td>{{ gateway[2]}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+  
+</div>
+
+   
+{% endblock %}
