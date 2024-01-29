@@ -31,15 +31,3 @@
 #     return render_template('add_gateway.html', gateways=gateways)
 
 
-  # # Example table creation query
-    # table_name = "gateways"
-    # create_table_query = """
-    #     CREATE TABLE IF NOT EXISTS {} (
-    #         name VARCHAR(255) NOT NULL,
-    #         id VARCHAR(17) NOT NULL UNIQUE PRIMARY KEY,
-    #         location VARCHAR(255) NOT NULL
-    #     );
-    # """.format(sql.Identifier(table_name))
-
-    # Execute the query to create the table if it doesn't exist
-    # cursor.execute(create_table_query)
