@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  chirpstack-network-server:
+    image: chirpstack/chirpstack-network-server:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./chirpstack-network-server:/etc/chirpstack-network-server

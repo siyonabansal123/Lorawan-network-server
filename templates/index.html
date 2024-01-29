@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NanoSniff</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./styles/index.css') }}">
+</head>
+
+<body>
+    <div class="header-container">
+        <header>
+            
+
+            <img class="logo" src="{{ url_for('static', filename='./images/NanoSniffLogo.jpeg') }}" alt="Company Logo">
+            
+
+            <nav class="menu">
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Application server</a></li>
+                    <li><a href="{{ url_for('add_gateway') }}">Gateways</a></li>
+                    <li><a href="{{ url_for('add_sensors') }}">Sensors</a></li>
+                </ul>
+            </nav>
+
+            
+        </header>
+    </div>
+
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.menu-options').classList.toggle('show');
+        }
+    </script>
+</body>
+
+</html>
+

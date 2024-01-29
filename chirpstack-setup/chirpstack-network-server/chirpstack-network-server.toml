@@ -1,0 +1,16 @@
+# chirpstack-network-server.toml
+[postgresql]
+dsn="postgres://nanosniff:password@localhost/all_data?sslmode=disable"
+# Max open connections.
+max_open_connections=25
+# Max idle connections.
+max_idle_connections=2
+
+[redis]
+url="redis://redis:6379"
+
+[network_server]
+net_id="000000"
+
+[network_server.gateway.backend]
+type="mqtt"

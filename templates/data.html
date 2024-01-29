@@ -1,0 +1,81 @@
+{% extends 'index.html' %}
+
+{% block title %}Table Data{% endblock %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./styles/data.css') }}">
+</head>
+    <!-- Form to select a different sensor and set the number of rows -->
+
+<div class="container" style="width:40%">
+    <h1>Display Data</h1>
+    <form action="{{ url_for('display_data') }}" method="POST">
+        <select name="table_name">
+            {% for table in tables %}
+                {% if selected_table == table %}
+                    <option value="{{ table }}" selected>{{ table }}</option>
+                {% else %}
+                    <option value="{{ table }}">{{ table }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <label for="num_rows">Number of minutes:</label>
+        <input type="number" name="num_rows" value="10" min="1"> <!-- Default value is 10, you can adjust as needed -->
+
+        <input type="submit" value="Show Data">
+    </form>
+</div>
+
+
+    <h1>Data from {{ selected_table }} from last {{num_rows}} minutes</h1>
+
+    
+    <button onclick="downloadCSV()">Download CSV</button> <!-- Added button for downloading CSV -->
+    
+    <br>
+    
+    <script>
+    
+        function downloadCSV() {
+            var csvContent = "data:text/csv;charset=utf-8,";
+    
+            // Add header row
+            csvContent += "X axis,Y axis,Z axis\n";
+    
+            // Add data rows
+            {% for row in table_data %}
+                csvContent += "{{ row[0] }},{{ row[1] }},{{ row[2] }}\n";
+            {% endfor %}
+    
+            // Create a Blob and create a download link
+            var blob = new Blob([csvContent], { type: 'text/csv' });
+            var link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.download = "{{ selected_table }}_data.csv";
+            link.click();
+        }
+    </script>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>X axis</th>
+                <th>Y axis</th>
+                <th>Z axis</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in table_data %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                  
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+ 
+{% endblock %}
